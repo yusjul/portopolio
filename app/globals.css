@@ -64,6 +64,16 @@
   --spacing-stack-md: 1.5rem;
 }
 
+html,
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
 body {
   background-color: #131313;
   color: #e5e2e1;
@@ -105,6 +115,11 @@ body.modal-open header {
     scroll-snap-type: none;
     height: auto;
     overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  .snap-container::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
   }
   .snap-section {
     scroll-snap-align: none;
