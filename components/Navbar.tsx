@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onScrollToEpisode, currentEpisod
         onClick={() => onScrollToEpisode(0)}
         className="font-label-mono text-xs font-bold tracking-widest text-primary-fixed-dim cursor-pointer select-none"
       >
-        KRONIK_EPISODE
+        PORTOPOLIO
       </div>
 
       {/* Desktop Navigation */}

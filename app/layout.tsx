@@ -13,10 +13,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KRONIK_EPISODE | Portofolio Muhammad Yusuf Julian",
+  title: "Portofolio",
   description: "Portofolio sinematik interaktif Muhammad Yusuf Julian - Menampilkan karya rekayasa sistem, utilitas otomatisasi, dan arsitektur web modern.",
   keywords: ["Muhammad Yusuf Julian", "yusjul", "Fullstack Developer", "Cinematic Portfolio", "Next.js", "Tailwind CSS", "Framer Motion"],
   authors: [{ name: "Muhammad Yusuf Julian" }],
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180" },
+    ],
+  },
+  other: {
+    "theme-color": "#00dbe7",
+  },
 };
 
 export default function RootLayout({
