@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EPISODE_CHRONICLES | Developer Story</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Geist+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#00dbe7",
+                    "tertiary-container": "#e3d4ff",
+                    "secondary-fixed": "#b2ecf6",
+                    "outline": "#849495",
+                    "surface-dim": "#131313",
+                    "on-primary-container": "#006a71",
+                    "tertiary-fixed-dim": "#d1bcff",
+                    "secondary-container": "#0d5159",
+                    "on-primary": "#00363a",
+                    "surface": "#131313",
+                    "on-tertiary-container": "#7318ff",
+                    "inverse-surface": "#e5e2e1",
+                    "tertiary-fixed": "#e9ddff",
+                    "inverse-primary": "#00696f",
+                    "surface-tint": "#00dbe7",
+                    "on-tertiary": "#3c0090",
+                    "surface-variant": "#353534",
+                    "tertiary": "#fcf5ff",
+                    "on-secondary": "#00363c",
+                    "surface-container-low": "#1c1b1b",
+                    "background": "#131313",
+                    "on-tertiary-fixed-variant": "#5700c9",
+                    "on-surface-variant": "#b9cacb",
+                    "on-background": "#e5e2e1",
+                    "error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#094e56",
+                    "primary-container": "#00f2ff",
+                    "on-tertiary-fixed": "#23005b",
+                    "on-error": "#690005",
+                    "on-secondary-container": "#88c2cb",
+                    "primary": "#e1fdff",
+                    "on-surface": "#e5e2e1",
+                    "outline-variant": "#3a494b",
+                    "on-primary-fixed": "#002022",
+                    "surface-bright": "#3a3939",
+                    "error": "#ffb4ab",
+                    "surface-container": "#201f1f",
+                    "primary-fixed": "#74f5ff",
+                    "surface-container-highest": "#353534",
+                    "secondary": "#96d0d9",
+                    "surface-container-high": "#2a2a2a",
+                    "on-error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#96d0d9",
+                    "on-secondary-fixed": "#001f24",
+                    "surface-container-lowest": "#0e0e0e",
+                    "inverse-on-surface": "#313030",
+                    "on-primary-fixed-variant": "#004f54"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "safe-margin": "clamp(1.5rem, 5vw, 4rem)",
+                    "stack-lg": "3rem",
+                    "stack-sm": "0.5rem",
+                    "section-gap": "clamp(4rem, 10vh, 8rem)",
+                    "stack-md": "1.5rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "label-mono": ["Geist Mono"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["clamp(1.5rem, 3vw, 2.25rem)", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-mono": ["0.75rem", {"lineHeight": "1.5", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "headline-lg": ["clamp(2rem, 5vw, 3.5rem)", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["1.25rem", {"lineHeight": "1.6", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+                    "display-lg": ["clamp(3rem, 8vw, 6rem)", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "800"}],
+                    "body-md": ["1rem", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131313;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .snap-container {
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            overflow-y: scroll;
+        }
+        
+        .snap-section {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .snap-container {
+                scroll-snap-type: none;
+                height: auto;
+            }
+            .snap-section {
+                scroll-snap-align: none;
+                height: auto;
+                min-height: 100vh;
+            }
+        }
+
+        .glow-border {
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(20px);
+            background: rgba(19, 19, 19, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            background: #00f2ff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            filter: blur(8px);
+            transition: transform 0.1s ease;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background selection:bg-primary-fixed-dim selection:text-on-primary-fixed">
+<div class="custom-cursor" id="cursor"></div>
+<!-- Background Shader -->
+<!-- STITCH_SHADER_START:ANIMATION_1 class="fixed inset-0 w-full h-full z-0 opacity-40" -->
+<div class="fixed inset-0 w-full h-full z-0 opacity-40" style="display:block;">
+<canvas id="shader-canvas-ANIMATION_1" style="display:block;width:100%;height:100%"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('shader-canvas-ANIMATION_1');
+
+  // Sync the WebGL drawing-buffer size with the CSS-driven layout size.
+  // This fires on initial layout and whenever the element is resized.
+  function syncSize() {
+    const w = canvas.clientWidth  || 1280;
+    const h = canvas.clientHeight || 720;
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width  = w;
+      canvas.height = h;
+    }
+  }
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(syncSize).observe(canvas);
+  }
+  syncSize();
+
+  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  if (!gl) return;
+  const vs = `attribute vec2 a_position;
+varying vec2 v_texCoord;
+void main() {
+  v_texCoord = a_position * 0.5 + 0.5;
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}`;
+  const fs = `precision highp float;
+varying vec2 v_texCoord;
+uniform float u_time;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+
+void main() {
+    vec2 uv = v_texCoord;
+    vec2 mouse = u_mouse / u_resolution;
+    
+    // Create a flowing gradient noise effect
+    float noise = sin(uv.x * 3.0 + u_time * 0.2) * cos(uv.y * 2.0 - u_time * 0.3);
+    noise += sin(uv.y * 5.0 + u_time * 0.1) * 0.5;
+    
+    vec3 color1 = vec3(0.02, 0.02, 0.05); // Deep background
+    vec3 color2 = vec3(0.0, 0.2, 0.3);    // Subtle cyan glow
+    vec3 color3 = vec3(0.05, 0.05, 0.1);  // Dark blue
+    
+    float mixFactor = smoothstep(-1.0, 1.0, noise);
+    vec3 finalColor = mix(color1, mix(color2, color3, uv.y), mixFactor);
+    
+    // Add mouse glow
+    float dist = length(uv - mouse);
+    float glow = smoothstep(0.3, 0.0, dist) * 0.15;
+    finalColor += vec3(0.0, 0.95, 1.0) * glow;
+    
+    gl_FragColor = vec4(finalColor, 1.0);
+}`;
+  function cs(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, cs(gl.VERTEX_SHADER, vs));
+  gl.attachShader(prog, cs(gl.FRAGMENT_SHADER, fs));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+  const pos = gl.getAttribLocation(prog, 'a_position');
+  gl.enableVertexAttribArray(pos);
+  gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+  const uTime = gl.getUniformLocation(prog, 'u_time');
+  const uRes = gl.getUniformLocation(prog, 'u_resolution');
+  const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+  // u_mouse is in pixel coordinates matching u_resolution (ShaderToy convention).
+  // Shaders that need normalized coords should use: u_mouse / u_resolution.
+  let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width && rect.height) {
+      const nx = (event.clientX - rect.left) / rect.width;
+      const ny = 1.0 - (event.clientY - rect.top) / rect.height;
+      mouse.x = nx * canvas.width;
+      mouse.y = ny * canvas.height;
+    }
+  });
+
+  function render(t) {
+    if (typeof ResizeObserver === 'undefined') syncSize();
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    if (uTime) gl.uniform1f(uTime, t * 0.001);
+    if (uRes) gl.uniform2f(uRes, canvas.width, canvas.height);
+    if (uMouse) gl.uniform2f(uMouse, mouse.x, mouse.y);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    requestAnimationFrame(render);
+  }
+  render(0);
+})();
+</script>
+</div>
+<!-- STITCH_SHADER_END:ANIMATION_1 -->
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-[100] bg-transparent backdrop-blur-xl bg-gradient-to-b from-surface-dim/80 to-transparent flex justify-between items-center px-safe-margin py-stack-sm w-full">
+<div class="font-label-mono text-label-mono font-bold tracking-tighter text-primary-fixed-dim">
+            EPISODE_CHRONICLES
+        </div>
+<nav class="hidden md:flex gap-stack-md">
+<a class="text-on-surface-variant font-label-mono hover:text-primary-fixed transition-all duration-500 text-primary-fixed-dim border-b border-primary-fixed-dim pb-1" href="#origin">EPISODES</a>
+<a class="text-on-surface-variant font-label-mono hover:text-primary-fixed transition-all duration-500" href="#projects">ARCHIVE</a>
+<a class="text-on-surface-variant font-label-mono hover:text-primary-fixed transition-all duration-500" href="#mindset">MANIFESTO</a>
+</nav>
+<button class="text-primary-fixed-dim active:scale-95 duration-300 ease-out">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</header>
+<!-- SideNavBar (Timeline indicator) -->
+<aside class="fixed right-8 top-1/2 -translate-y-1/2 z-[90] flex flex-col items-center gap-stack-md">
+<div class="flex flex-col items-center mb-4">
+<span class="text-primary-fixed-dim font-label-mono text-[10px] tracking-widest opacity-60">TIMELINE</span>
+<div class="w-px h-8 bg-outline-variant/30 my-2"></div>
+</div>
+<a class="group flex items-center gap-4" href="#intro">
+<span class="opacity-0 group-hover:opacity-100 font-label-mono text-primary-fixed-dim transition-opacity">INTRO</span>
+<span class="material-symbols-outlined text-primary-fixed-dim font-bold scale-125">radio_button_checked</span>
+</a>
+<a class="group flex items-center gap-4" href="#origin">
+<span class="opacity-0 group-hover:opacity-100 font-label-mono text-primary-fixed-dim transition-opacity">CHRONO_01</span>
+<span class="material-symbols-outlined text-outline opacity-40 hover:opacity-100 hover:scale-110 transition-all">radio_button_unchecked</span>
+</a>
+<a class="group flex items-center gap-4" href="#skills">
+<span class="opacity-0 group-hover:opacity-100 font-label-mono text-primary-fixed-dim transition-opacity">CHRONO_02</span>
+<span class="material-symbols-outlined text-outline opacity-40 hover:opacity-100 hover:scale-110 transition-all">radio_button_unchecked</span>
+</a>
+<a class="group flex items-center gap-4" href="#projects">
+<span class="opacity-0 group-hover:opacity-100 font-label-mono text-primary-fixed-dim transition-opacity">CHRONO_03</span>
+<span class="material-symbols-outlined text-outline opacity-40 hover:opacity-100 hover:scale-110 transition-all">radio_button_unchecked</span>
+</a>
+<a class="group flex items-center gap-4" href="#mindset">
+<span class="opacity-0 group-hover:opacity-100 font-label-mono text-primary-fixed-dim transition-opacity">CHRONO_04</span>
+<span class="material-symbols-outlined text-outline opacity-40 hover:opacity-100 hover:scale-110 transition-all">radio_button_unchecked</span>
+</a>
+<a class="group flex items-center gap-4" href="#contact">
+<span class="opacity-0 group-hover:opacity-100 font-label-mono text-primary-fixed-dim transition-opacity">CHRONO_05</span>
+<span class="material-symbols-outlined text-outline opacity-40 hover:opacity-100 hover:scale-110 transition-all">radio_button_unchecked</span>
+</a>
+</aside>
+<main class="snap-container relative z-10">
+<!-- EPISODE 0: INTRO -->
+<section class="snap-section flex flex-col items-center justify-center text-center px-safe-margin bg-surface" id="intro">
+<div class="max-w-4xl space-y-stack-md">
+<span class="font-label-mono text-label-mono text-primary-fixed-dim tracking-[0.3em] uppercase block mb-4">Prologue</span>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-8">This is not a portfolio. <br/><span class="text-primary-fixed-dim italic">This is a story.</span></h1>
+<a class="inline-flex items-center gap-stack-sm bg-primary-fixed-dim text-on-primary px-8 py-4 font-label-mono text-label-mono hover:scale-105 transition-transform duration-300 rounded-lg" href="#origin">
+                    START EXPERIENCE
+                    <span class="material-symbols-outlined">arrow_downward</span>
+</a>
+</div>
+</section>
+<!-- EPISODE 1: ORIGIN -->
+<section class="snap-section flex items-center px-safe-margin bg-surface-container-lowest" id="origin">
+<!-- STITCH_THREEJS_START:ANIMATION_2 class="absolute inset-0 w-full h-full opacity-30" -->
+<div class="absolute inset-0 w-full h-full opacity-30" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_2" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_2');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Three.js Skill Tree Particles / Abstract Geometry
+const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+camera.position.z = 5;
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+container.appendChild(renderer.domElement);
+
+// Particles
+const particlesCount = 1500;
+const posArray = new Float32Array(particlesCount * 3);
+
+for(let i = 0; i < particlesCount * 3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 12;
+}
+
+const particlesGeometry = new THREE.BufferGeometry();
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+const particlesMaterial = new THREE.PointsMaterial({
+    size: 0.015,
+    color: 0x00f2ff,
+    transparent: true,
+    opacity: 0.6,
+    blending: THREE.AdditiveBlending
+});
+
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particlesMesh);
+
+function animate() {
+    requestAnimationFrame(animate);
+    particlesMesh.rotation.y += 0.001;
+    particlesMesh.rotation.x += 0.0005;
+    renderer.render(scene, camera);
+}
+
+window.addEventListener('resize', () => {
+    const w = container.clientWidth || window.innerWidth;
+    const h = container.clientHeight || window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+});
+
+animate();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_2 -->
+<div class="grid md:grid-cols-2 gap-stack-lg items-center relative z-10 w-full">
+<div class="space-y-stack-md max-w-xl">
+<span class="font-label-mono text-label-mono text-primary-fixed-dim uppercase">Episode 01 // Origin</span>
+<h2 class="font-headline-lg text-headline-lg">Tracing the Signal</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">The journey didn't start with a goal; it started with a question. In the dark glow of an IDE, I found a language that could build worlds. Logic became poetry. Complexity became clarity.</p>
+<div class="flex gap-4 pt-4">
+<div class="glass-panel px-4 py-2 font-label-mono text-label-mono text-primary-fixed-dim">EST. 2018</div>
+<div class="glass-panel px-4 py-2 font-label-mono text-label-mono">HARD_WIRED</div>
+</div>
+</div>
+<div class="hidden md:flex flex-col gap-4 opacity-50 select-none pointer-events-none">
+<div class="font-label-mono text-xs text-primary-fixed-dim ml-12 animate-pulse">&lt;init&gt; system_boot.sh</div>
+<div class="font-label-mono text-xs text-outline ml-4">while(path.exists()) { explore(new Horizon()); }</div>
+<div class="font-label-mono text-xs text-outline ml-20">process.on('SIGINT', () =&gt; { resume(); });</div>
+<div class="font-label-mono text-xs text-primary-fixed-dim ml-8">success: "Neural link established"</div>
+</div>
+</div>
+</section>
+<!-- EPISODE 2: SKILLS -->
+<section class="snap-section flex flex-col justify-center px-safe-margin bg-surface" id="skills">
+<div class="max-w-7xl w-full mx-auto">
+<div class="mb-stack-lg">
+<span class="font-label-mono text-label-mono text-primary-fixed-dim uppercase">Episode 02 // Tools of Intent</span>
+<h2 class="font-headline-lg text-headline-lg">Technical Arsenal</h2>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-stack-md">
+<!-- Skill Card -->
+<div class="glass-panel p-8 group hover:border-primary-fixed-dim/50 transition-all duration-500">
+<div class="text-primary-fixed-dim mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">html</span>
+</div>
+<h3 class="font-label-mono text-label-mono text-on-surface">HTML5</h3>
+<div class="h-1 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-700 mt-2"></div>
+</div>
+<div class="glass-panel p-8 group hover:border-primary-fixed-dim/50 transition-all duration-500">
+<div class="text-primary-fixed-dim mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">css</span>
+</div>
+<h3 class="font-label-mono text-label-mono text-on-surface">CSS3</h3>
+<div class="h-1 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-700 mt-2"></div>
+</div>
+<div class="glass-panel p-8 group hover:border-primary-fixed-dim/50 transition-all duration-500">
+<div class="text-primary-fixed-dim mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">javascript</span>
+</div>
+<h3 class="font-label-mono text-label-mono text-on-surface">JS_ES6</h3>
+<div class="h-1 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-700 mt-2"></div>
+</div>
+<div class="glass-panel p-8 group hover:border-primary-fixed-dim/50 transition-all duration-500">
+<div class="text-primary-fixed-dim mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">php</span>
+</div>
+<h3 class="font-label-mono text-label-mono text-on-surface">PHP_8</h3>
+<div class="h-1 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-700 mt-2"></div>
+</div>
+<div class="glass-panel p-8 group hover:border-primary-fixed-dim/50 transition-all duration-500">
+<div class="text-primary-fixed-dim mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">terminal</span>
+</div>
+<h3 class="font-label-mono text-label-mono text-on-surface">JAVA</h3>
+<div class="h-1 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-700 mt-2"></div>
+</div>
+<div class="glass-panel p-8 group hover:border-primary-fixed-dim/50 transition-all duration-500">
+<div class="text-primary-fixed-dim mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">data_object</span>
+</div>
+<h3 class="font-label-mono text-label-mono text-on-surface">PYTHON</h3>
+<div class="h-1 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-700 mt-2"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- EPISODE 3: PROJECTS -->
+<section class="snap-section flex items-center px-safe-margin bg-surface-container-low" id="projects">
+<div class="w-full">
+<div class="flex justify-between items-end mb-stack-lg">
+<div>
+<span class="font-label-mono text-label-mono text-primary-fixed-dim uppercase">Episode 03 // Creations</span>
+<h2 class="font-headline-lg text-headline-lg">Project Archive</h2>
+</div>
+<button class="font-label-mono text-label-mono border-b border-outline hover:text-primary-fixed transition-colors">VIEW_ALL</button>
+</div>
+<div class="flex overflow-x-auto gap-stack-md pb-8 no-scrollbar snap-x">
+<!-- Project 1 -->
+<div class="min-w-[80vw] md:min-w-[45vw] snap-center relative aspect-video group cursor-pointer overflow-hidden rounded-xl" onclick="openModal('project-1')">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60" data-alt="A high-contrast cinematic shot of a computer terminal in a dark, atmospheric room with neon cyan glowing text. The screen displays complex data visualizations and network nodes. The lighting is moody and noir-inspired, highlighting the precision of the technical interface and a sleek, futuristic aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQHbACxjyJzEVTx7OLe1nrK_eSSIwGw9IzJbfDVUOIrJn41JNEtO0bkyhkJ0mSdk7iE9I_Ogi0nEzzm8afdB-sJ9MMQcEUy1Ei46exyIHmIDRpQ6Gj1D-gl8P87XuN6d2JXkS7mOwIQCN6D3HBXZr_s_32kUR_mb-vHj_ZjU8K0snC6h364K9Uz_tR409_F65tMZJhf1-0FQ6gMWURWrLZd638Lkn32T3T1P5XpVu-zn4kl6onj0IXU5-8WlMrjrwj56Gg04TF_iw"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="font-label-mono text-xs text-primary-fixed-dim">CYBER_SECURITY</span>
+<h3 class="font-headline-md text-headline-md mt-2">SENTINEL_CORE</h3>
+</div>
+</div>
+<!-- Project 2 -->
+<div class="min-w-[80vw] md:min-w-[45vw] snap-center relative aspect-video group cursor-pointer overflow-hidden rounded-xl" onclick="openModal('project-2')">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60" data-alt="Abstract 3D geometric structures in a dark void, glowing with intricate cyan circuitry patterns. The composition is asymmetrical and modern, with a focus on depth and mathematical beauty. High-end lighting creates soft glows and sharp shadows, evoking a sense of complex system architecture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD7hVv45iyyACslbIrKyHEGZEIxu2PJeMVoTdFGpxigR9ysQNZXknaPUaSLvSQQxp23yL0kcnTXirYpoVXobWq7coxZ10-CqOrt8wV_xrU2IkEoCjsFbfdjgANiFb1feoMNl8tzTXFBR_C705rjY1bgoqo1ujZ-qr4Np91_EKaBIvASnbrVOwRe-VB8Y1al48dtJHOhuP8I8gON6j31u16q4SDhWKfM9ytc2z275jTL6iLMFVc35YHrfYKXp3QamUyKf9-u6C-wqE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="font-label-mono text-xs text-primary-fixed-dim">SYSTEM_ARCHITECTURE</span>
+<h3 class="font-headline-md text-headline-md mt-2">NEURAL_BRIDGE</h3>
+</div>
+</div>
+<!-- Project 3 -->
+<div class="min-w-[80vw] md:min-w-[45vw] snap-center relative aspect-video group cursor-pointer overflow-hidden rounded-xl" onclick="openModal('project-3')">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-60" data-alt="A cinematic view of digital satellite data streaming over a dark, stylized representation of Earth. Glowing blue and cyan light pulses along data paths. The visual style is premium and high-fidelity, like a screen from a high-budget sci-fi documentary, emphasizing global connectivity and large-scale technical infrastructure." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZDBIxQB_iHfGOn-tBJyNIlP-XOJ5NlW7zgUWTO4GGDQWIUKszaz7MDziu-AVwVMiN3OnLeSxoH65DicgXjgc7sUnAyKOMX8jkq18I99QsNCS1YqBoxqB5VZprp4W1sxVwhiw56JGAHCGlCtlH6jRorp9erlLNHJTBT0SjAYWzPZXdYpZDbM13-kJ0BPX8Mhbi2P50MYzcU68ZxZ2p-R3VqEamSqNxq-PEJ5V7zY3vptmvGJy-IrMaCmlqpWd2x-tiXCWPn9ZKor0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-dim to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8">
+<span class="font-label-mono text-xs text-primary-fixed-dim">CLOUD_INFRA</span>
+<h3 class="font-headline-md text-headline-md mt-2">STRATOS_SYNC</h3>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- EPISODE 4: MINDSET -->
+<section class="snap-section flex items-center justify-center bg-surface px-safe-margin relative overflow-hidden" id="mindset">
+<div class="absolute inset-0 opacity-10 pointer-events-none select-none overflow-hidden">
+<div class="text-[20rem] font-bold text-primary-fixed-dim leading-none absolute -left-20 -top-20 opacity-20">SYSTEMS</div>
+</div>
+<div class="max-w-4xl text-center relative z-10">
+<span class="font-label-mono text-label-mono text-primary-fixed-dim uppercase mb-8 block tracking-widest">Episode 04 // Philosophy</span>
+<h2 class="font-display-lg text-display-lg leading-tight mb-8">I don't build websites.<br/> <span class="text-primary-fixed-dim">I build systems.</span></h2>
+<div class="w-24 h-px bg-primary-fixed-dim mx-auto mb-8"></div>
+<p class="font-body-lg text-body-lg text-outline max-w-2xl mx-auto italic">"True architecture is invisible. It’s the seamless flow of data, the quiet efficiency of logic, and the resilience of a well-engineered core."</p>
+</div>
+</section>
+<!-- EPISODE 5: FINAL SCENE -->
+<section class="snap-section flex flex-col justify-between bg-surface-dim px-safe-margin pt-32 pb-8" id="contact">
+<div class="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-stack-lg">
+<div>
+<span class="font-label-mono text-label-mono text-primary-fixed-dim uppercase mb-4 block">Episode 05 // Transmission</span>
+<h2 class="font-headline-lg text-headline-lg mb-8">Connect with the Unit.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-12">Currently open for architectural challenges, cinematic collaborations, and innovative engineering quests.</p>
+<div class="space-y-stack-md">
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-12 glass-panel flex items-center justify-center group-hover:shadow-[0_0_15px_rgba(0,242,255,0.4)] transition-all">
+<span class="material-symbols-outlined text-primary-fixed-dim">alternate_email</span>
+</div>
+<div>
+<div class="font-label-mono text-xs text-outline">ENCRYPTED_COMMS</div>
+<div class="font-headline-md text-headline-md text-[1.25rem] group-hover:text-primary-fixed-dim transition-colors">hello@tech_noir_unit.sys</div>
+</div>
+</div>
+<div class="flex items-center gap-4 group cursor-pointer">
+<div class="w-12 h-12 glass-panel flex items-center justify-center group-hover:shadow-[0_0_15px_rgba(0,242,255,0.4)] transition-all">
+<span class="material-symbols-outlined text-primary-fixed-dim">hub</span>
+</div>
+<div>
+<div class="font-label-mono text-xs text-outline">SOURCE_CONTROL</div>
+<div class="font-headline-md text-headline-md text-[1.25rem] group-hover:text-primary-fixed-dim transition-colors">github.com/noir_dev</div>
+</div>
+</div>
+</div>
+</div>
+<div class="glass-panel p-8">
+<form class="space-y-6">
+<div class="group">
+<label class="font-label-mono text-[10px] text-primary-fixed-dim block mb-1">IDENTIFIER</label>
+<input class="w-full bg-transparent border-none border-b border-outline-variant focus:border-primary-fixed-dim focus:ring-0 text-on-surface font-headline-md placeholder:text-outline/30 px-0" placeholder="Your Name" type="text"/>
+</div>
+<div class="group">
+<label class="font-label-mono text-[10px] text-primary-fixed-dim block mb-1">SECURE_CHANNEL</label>
+<input class="w-full bg-transparent border-none border-b border-outline-variant focus:border-primary-fixed-dim focus:ring-0 text-on-surface font-headline-md placeholder:text-outline/30 px-0" placeholder="Email Address" type="email"/>
+</div>
+<div class="group">
+<label class="font-label-mono text-[10px] text-primary-fixed-dim block mb-1">PAYLOAD</label>
+<textarea class="w-full bg-transparent border-none border-b border-outline-variant focus:border-primary-fixed-dim focus:ring-0 text-on-surface font-body-md placeholder:text-outline/30 px-0 resize-none" placeholder="Transmit message..." rows="4"></textarea>
+</div>
+<button class="w-full py-4 glass-panel text-primary-fixed-dim font-label-mono text-label-mono hover:bg-primary-fixed-dim hover:text-on-primary transition-all duration-300">SEND_TRANSMISSION</button>
+</form>
+</div>
+</div>
+<!-- Footer -->
+<footer class="flex justify-between items-center border-t border-outline-variant/20 pt-stack-md mt-16 w-full">
+<div class="text-primary-fixed-dim font-bold font-label-mono text-label-mono">© 2024 TECHNICAL_NOIR_UNIT</div>
+<div class="flex gap-stack-md font-label-mono text-label-mono text-on-surface-variant">
+<a class="hover:text-primary-fixed transition-colors" href="#">ENCRYPTED_COMMS</a>
+<a class="hover:text-primary-fixed transition-colors" href="#">TERMINAL_ACCESS</a>
+</div>
+</footer>
+</section>
+</main>
+<!-- Modal for Project Details -->
+<div class="fixed inset-0 z-[200] hidden flex items-center justify-center p-safe-margin" id="project-modal">
+<div class="absolute inset-0 bg-surface-dim/95 backdrop-blur-xl" onclick="closeModal()"></div>
+<div class="glass-panel max-w-4xl w-full h-[819px] overflow-y-auto relative z-10 rounded-2xl">
+<button class="absolute top-6 right-6 text-on-surface hover:text-primary-fixed-dim transition-colors" onclick="closeModal()">
+<span class="material-symbols-outlined text-3xl">close</span>
+</button>
+<div class="p-8 md:p-12" id="modal-content">
+<!-- Content will be injected here -->
+</div>
+</div>
+</div>
+<script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
+        });
+
+        // Hover scale for interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .glass-panel, .group');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.style.transform += ' scale(2.5)');
+            el.addEventListener('mouseleave', () => cursor.style.transform = cursor.style.transform.replace(' scale(2.5)', ''));
+        });
+
+        // Project Modals
+        function openModal(projectId) {
+            const modal = document.getElementById('project-modal');
+            const content = document.getElementById('modal-content');
+            
+            const projects = {
+                'project-1': {
+                    title: 'SENTINEL_CORE',
+                    tag: 'CYBER_SECURITY',
+                    desc: 'A decentralized security monitoring system designed for enterprise-level cloud infrastructures. Focused on real-time threat detection using heuristic analysis and neural patterns.',
+                    stack: ['Python', 'Rust', 'Redis', 'Docker'],
+                    img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070'
+                },
+                'project-2': {
+                    title: 'NEURAL_BRIDGE',
+                    tag: 'SYSTEM_ARCHITECTURE',
+                    desc: 'An experimental middleware layer facilitating high-speed data translation between legacy mainframes and modern GraphQL endpoints. Built for extreme throughput and sub-millisecond latency.',
+                    stack: ['Java', 'Node.js', 'Go', 'Kubernetes'],
+                    img: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=2070'
+                },
+                'project-3': {
+                    title: 'STRATOS_SYNC',
+                    tag: 'CLOUD_INFRA',
+                    desc: 'A global asset synchronization platform utilizing edge computing to deliver localized content at lightning speeds. Optimized for heavy media and real-time interactive streams.',
+                    stack: ['AWS', 'C++', 'PHP 8.2', 'React'],
+                    img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2072'
+                }
+            };
+
+            const data = projects[projectId];
+            content.innerHTML = `
+                <div class="space-y-8">
+                    <img src="${data.img}" class="w-full h-64 object-cover rounded-xl" />
+                    <div>
+                        <span class="font-label-mono text-primary-fixed-dim text-sm">${data.tag}</span>
+                        <h2 class="font-display-lg text-headline-lg mt-2">${data.title}</h2>
+                    </div>
+                    <p class="font-body-lg text-on-surface-variant">${data.desc}</p>
+                    <div class="flex flex-wrap gap-2">
+                        ${data.stack.map(s => `<span class="px-4 py-1 glass-panel font-label-mono text-xs text-outline">${s}</span>`).join('')}
+                    </div>
+                    <div class="pt-8">
+                        <a href="#" class="inline-flex items-center gap-2 bg-primary-fixed-dim text-on-primary px-8 py-3 rounded-lg font-label-mono">ACCESS_TERMINAL <span class="material-symbols-outlined">launch</span></a>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('project-modal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Active Link Highlighting
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('aside a span.material-symbols-outlined');
+        const container = document.querySelector('.snap-container');
+
+        container.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (container.scrollTop >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navDots.forEach((dot, index) => {
+                const parent = dot.parentElement;
+                const target = parent.getAttribute('href').substring(1);
+                
+                if (target === current) {
+                    dot.textContent = 'radio_button_checked';
+                    dot.classList.add('text-primary-fixed-dim', 'scale-125');
+                    dot.classList.remove('text-outline', 'opacity-40');
+                } else {
+                    dot.textContent = 'radio_button_unchecked';
+                    dot.classList.remove('text-primary-fixed-dim', 'scale-125');
+                    dot.classList.add('text-outline', 'opacity-40');
+                }
+            });
+        });
+    </script>
+</body></html>
