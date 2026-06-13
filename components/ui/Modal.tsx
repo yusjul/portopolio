@@ -56,7 +56,7 @@ export const Modal: React.FC<ModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="glass-panel max-w-4xl w-full max-h-[85vh] overflow-y-auto relative z-10 rounded-xl"
+            className="glass-panel max-w-4xl w-full max-h-[85vh] overflow-y-auto no-scrollbar relative z-10 rounded-xl"
           >
             {/* Close Button */}
             <button
