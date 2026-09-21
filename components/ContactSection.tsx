@@ -44,7 +44,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onRestart, id })
   return (
     <section id={id} className="snap-section flex flex-col justify-between bg-transparent px-safe-margin pt-20 pb-8 relative">
       <div className="max-w-5xl w-full mx-auto grid md:grid-cols-2 gap-12 z-10 my-auto">
-        
+
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -64,7 +64,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onRestart, id })
 
           <div className="space-y-3 pt-4">
             <a
-              href="mailto:yusufjulian@gmail.com"
+              href="mailto:muhammadyusufjulian@gmail.com"
               className="flex items-center gap-3 p-3 rounded-lg border border-outline-variant/20 bg-surface-container-lowest/50 hover:border-primary-fixed-dim/40 transition-colors w-fit group"
             >
               <div className="p-2 rounded bg-surface-container/40 text-primary-fixed-dim">
@@ -72,7 +72,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onRestart, id })
               </div>
               <div>
                 <div className="font-label-mono text-[9px] text-outline uppercase tracking-wider">Email</div>
-                <div className="font-label-mono text-xs text-on-surface font-medium group-hover:text-primary-fixed-dim transition-colors">yusufjulian@gmail.com</div>
+                <div className="font-label-mono text-xs text-on-surface font-medium group-hover:text-primary-fixed-dim transition-colors">muhammadyusufjulian@gmail.com</div>
               </div>
             </a>
 
@@ -182,7 +182,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onRestart, id })
         <div className="text-[10px] font-label-mono text-outline tracking-wider text-center sm:text-left">
           © 2026 Muhammad Yusuf Julian
         </div>
-        
+
         <button
           onClick={onRestart}
           className="font-label-mono text-[10px] text-outline hover:text-primary-fixed-dim transition-colors flex items-center gap-2 cursor-pointer"
