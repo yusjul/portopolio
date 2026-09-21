@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import Head from 'next/head'; // SEO helper
 import '../styles/portfolio.css'; // design system
 
 interface Episode1Props {
@@ -22,7 +21,7 @@ export const Episode1: React.FC<Episode1Props> = ({ id }) => {
     let width = (canvas.width = canvas.clientWidth);
     let height = (canvas.height = canvas.clientHeight);
 
-    const numParticles = 60;
+    const numParticles = 40;
     const particles: Array<{
       x: number;
       y: number;
@@ -35,9 +34,9 @@ export const Episode1: React.FC<Episode1Props> = ({ id }) => {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: Math.random() * 2 + 1,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        radius: Math.random() * 1.5 + 0.5,
       });
     }
 
@@ -50,9 +49,9 @@ export const Episode1: React.FC<Episode1Props> = ({ id }) => {
 
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      
-      ctx.fillStyle = 'rgba(0, 242, 255, 0.4)';
-      ctx.strokeStyle = 'rgba(0, 242, 255, 0.05)';
+
+      ctx.fillStyle = 'rgba(0, 219, 231, 0.3)';
+      ctx.strokeStyle = 'rgba(0, 219, 231, 0.04)';
 
       particles.forEach((p, idx) => {
         p.x += p.vx;
@@ -68,8 +67,8 @@ export const Episode1: React.FC<Episode1Props> = ({ id }) => {
         for (let j = idx + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-          if (dist < 120) {
-            ctx.lineWidth = (1 - dist / 120) * 0.8;
+          if (dist < 100) {
+            ctx.lineWidth = (1 - dist / 100) * 0.6;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -91,50 +90,72 @@ export const Episode1: React.FC<Episode1Props> = ({ id }) => {
 
   return (
     <section id={id} className="snap-section flex items-center px-safe-margin relative">
-  <Head>
-      <title>Episode 01 – Asal | Portofolio Saya</title>
-      <meta name="description" content="Menelusuri Sinyal – tampilan interaktif perjalanan saya dan eksperimen visual." />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta name="theme-color" content="#ffffff" />
-  </Head>
-      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-40 pointer-events-none" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-30 pointer-events-none" />
 
-      <div className="grid md:grid-cols-2 gap-8 items-center relative z-10 w-full max-w-7xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-16 items-center relative z-10 w-full max-w-7xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.7 }}
           className="space-y-6 max-w-xl"
         >
-          <div className="glass-panel px-3 py-1.5 w-fit text-[10px] tracking-[0.2em] font-label-mono font-bold uppercase text-primary-fixed-dim/90 rounded-full border border-primary-fixed-dim/15 bg-white/[0.02] shadow-[0_0_15px_rgba(0,242,255,0.05)]">
-            Episode 01 // Asal
+          <div className="font-label-mono text-[10px] tracking-[0.25em] text-outline uppercase">
+            01 — Asal
           </div>
-          <h2 className="text-headline-lg bg-gradient-to-r from-white to-on-surface-variant bg-clip-text text-transparent heading-animate font-extrabold tracking-tight">Menelusuri Sinyal</h2>
-          <p className="text-body-lg text-on-surface-variant leading-relaxed font-light" role="document">
-            Perjalanan saya tidak lahir dari ambisi dingin mengejar karier atau materi. Semua berawal di kamar yang gelap, di larut malam yang sunyi, ketika saya hanya ditemani oleh cahaya monitor yang meremang. Di sana, saya menyadari bahwa menulis kode bukan sekadar memberikan perintah kaku ke dalam mesin. Menulis kode adalah cara saya menuangkan jiwa, merajut logika dengan keindahan yang sunyi. Dari titik itu, saya jatuh cinta pada seni menciptakan sesuatu dari ketiadaan.
+          <h2 className="text-headline-lg text-on-surface font-extrabold tracking-tight">
+            Tentang saya
+          </h2>
+          <p className="text-body-lg text-on-surface-variant leading-relaxed font-light">
+            Mahasiswa Sistem Informasi yang berfokus pada pengembangan web,
+            eksplorasi data, dan membangun antarmuka yang fungsional.
           </p>
-          <div className="flex gap-4 pt-4" aria-label="Project details">
-            <div className="glass-panel px-4 py-2 font-label-mono text-[10px] text-primary-fixed-dim">
-              EST. 2018
+
+          <div className="flex flex-wrap gap-3 pt-2">
+            {['Sistem Informasi', 'Web Development', 'Data', 'UI/UX'].map((tag) => (
+              <span
+                key={tag}
+                className="font-label-mono text-[10px] text-outline border border-outline-variant/30 px-3 py-1 rounded"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex gap-8 pt-4 border-t border-outline-variant/15">
+            <div>
+              <div className="font-label-mono text-[9px] text-outline uppercase tracking-widest mb-1">Mulai belajar</div>
+              <div className="font-label-mono text-sm text-primary-fixed-dim font-bold">2018</div>
             </div>
-            <div className="glass-panel px-4 py-2 font-label-mono text-[10px] text-outline">
-              HARD_WIRED
+            <div>
+              <div className="font-label-mono text-[9px] text-outline uppercase tracking-widest mb-1">Lokasi</div>
+              <div className="font-label-mono text-sm text-on-surface font-bold">Indonesia</div>
+            </div>
+            <div>
+              <div className="font-label-mono text-[9px] text-outline uppercase tracking-widest mb-1">Status</div>
+              <div className="font-label-mono text-sm text-primary-fixed-dim font-bold">Tersedia</div>
             </div>
           </div>
         </motion.div>
 
+        {/* Right side — subtle decorative element, not gimmick */}
         <motion.div
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 0.4 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="hidden md:flex flex-col gap-4 font-mono text-xs text-outline select-none pointer-events-none"
+          transition={{ duration: 1, delay: 0.3 }}
+          className="hidden md:flex flex-col gap-3 font-label-mono text-[11px] text-outline/30 select-none pointer-events-none"
+          aria-hidden="true"
         >
-          <div className="text-primary-fixed-dim ml-12 animate-pulse">&lt;init&gt; system_boot.sh</div>
-          <div className="ml-4">while(path.exists()) &#123; explore(new Horizon()); &#125;</div>
-          <div className="ml-20">process.on(&apos;SIGINT&apos;, () =&gt; &#123; resume(); &#125;);</div>
-          <div className="text-primary-fixed-dim ml-8">success: &quot;Neural link established&quot;</div>
+          {['2018', '2020', '2022', '2024', '2026'].map((year, i) => (
+            <div key={year} className="flex items-center gap-3">
+              <span className="text-primary-fixed-dim/20 text-[9px] tracking-widest w-10">{year}</span>
+              <div
+                className="h-px bg-outline-variant/20"
+                style={{ width: `${(i + 1) * 40}px` }}
+              />
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>

@@ -75,6 +75,9 @@ export const Modal: React.FC<ModalProps> = ({
                     src={image}
                     alt={title}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
                   />
                 </div>
               )}
@@ -96,8 +99,8 @@ export const Modal: React.FC<ModalProps> = ({
 
               {techStack && techStack.length > 0 && (
                 <div className="space-y-2 pt-2">
-                  <span className="font-label-mono text-xs text-outline tracking-wider block">
-                    TUMPUKAN_TEKNOLOGI
+                  <span className="font-label-mono text-xs text-outline tracking-wider block uppercase">
+                    Tech Stack
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {techStack.map((tech) => (

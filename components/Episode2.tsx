@@ -7,85 +7,97 @@ interface Episode2Props {
   id?: string;
 }
 
-export const Episode2: React.FC<Episode2Props> = ({ id }) => {
-  const mockErrors = [
-    { type: 'FATAL_ERROR', code: '0x800F081F', msg: 'Segmentation fault: core dumped.' },
-    { type: 'COMPILER_WARN', code: 'C4311', msg: 'Pointer truncation from Type* to uint32_t.' },
-    { type: 'STACK_OVERFLOW', code: 'SO-449', msg: 'Maximum call stack size exceeded at recursive_search (index.ts:145).' },
-    { type: 'MEMORY_LEAK', code: 'MEM_ALERT', msg: 'Process exited: Heap out of memory (limit 4096MB).' }
-  ];
+interface Milestone {
+  year: string;
+  title: string;
+  desc: string;
+  focus: string[];
+}
 
+const milestones: Milestone[] = [
+  {
+    year: "2021",
+    title: "Fondasi Pemrograman",
+    desc: "Memulai dengan logika pemrograman, algoritma dasar, dan pengembangan web statis.",
+    focus: ["HTML & CSS", "JavaScript", "Algoritma Dasar"]
+  },
+  {
+    year: "2022",
+    title: "Pengembangan Fullstack Dasar",
+    desc: "Mempelajari integrasi backend, perancangan database relasional, dan arsitektur CRUD.",
+    focus: ["PHP & MySQL", "REST API", "Database Design"]
+  },
+  {
+    year: "2023",
+    title: "Sistem Informasi & Desain Antarmuka",
+    desc: "Fokus pada analisis kebutuhan pengguna, alur proses bisnis, dan prototyping antarmuka.",
+    focus: ["UI/UX Prototyping", "Analisis Sistem", "Figma"]
+  },
+  {
+    year: "2024 — Sekarang",
+    title: "Ekosistem Web Modern & Data",
+    desc: "Membangun aplikasi web performan dengan teknologi terkini serta eksplorasi otomasi dan data.",
+    focus: ["React & Next.js", "TypeScript", "Tailwind CSS"]
+  }
+];
+
+export const Episode2: React.FC<Episode2Props> = ({ id }) => {
   return (
-    <section id={id} className="snap-section flex items-center justify-center bg-transparent px-safe-margin relative">
-      <div className="grid md:grid-cols-2 gap-stack-lg items-center w-full max-w-7xl mx-auto z-10">
-        
-        {/* Story copy */}
+    <section id={id} className="snap-section flex items-center justify-center bg-transparent px-safe-margin relative py-16">
+      <div className="w-full max-w-5xl mx-auto z-10 space-y-12">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="space-y-6 max-w-xl order-last md:order-first"
+          transition={{ duration: 0.6 }}
+          className="space-y-4 max-w-xl"
         >
-          <div className="glass-panel px-3 py-1.5 w-fit text-[10px] tracking-[0.2em] font-label-mono font-bold uppercase text-error rounded-full border border-error/15 bg-white/[0.02] shadow-[0_0_15px_rgba(239,68,68,0.05)]">
-            Episode 02 // Kekacauan
+          <div className="font-label-mono text-[10px] tracking-[0.25em] text-outline uppercase">
+            02 — Perjalanan
           </div>
-          <h2 className="text-headline-lg bg-gradient-to-r from-white to-on-surface-variant bg-clip-text text-transparent glitch-wrapper font-extrabold tracking-tight">
-            <span className="glitch-text" data-text="Kebisingan Awal Penciptaan">
-              Kebisingan Awal Penciptaan
-            </span>
+          <h2 className="text-headline-lg text-on-surface font-extrabold tracking-tight">
+            Fase dan perkembangan
           </h2>
           <p className="text-body-lg text-on-surface-variant font-light leading-relaxed">
-            Namun, jalan penciptaan tidak pernah ramah. Ada malam-malam panjang penuh keputusasaan ketika compiler terus menolak, memori bocor tanpa ampun, dan sistem hancur berkeping-keping. Rasanya seperti berteriak sendirian di tengah kehampaan malam.
-          </p>
-          <p className="text-body-md text-outline italic">
-            Tapi di titik terendah itulah saya belajar: setiap eror bukanlah akhir, melainkan detak jantung dari proses belajar. Kita harus hancur terlebih dahulu sebelum tahu cara membangun kembali dengan lebih tangguh.
+            Perjalanan belajar yang konsisten melalui eksplorasi praktis, pemecahan masalah, dan pembangunan proyek nyata.
           </p>
         </motion.div>
 
-        {/* Glitch error log simulator UI */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="glass-panel p-6 border border-error/20 rounded-xl space-y-4 font-mono text-xs overflow-hidden max-w-lg w-full shadow-[0_0_20px_rgba(239,68,68,0.05)] bg-[#0d0a0a]/80"
-        >
-          <div className="flex justify-between items-center border-b border-error/10 pb-3">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-error animate-pulse" />
-              <span className="text-error font-bold tracking-widest text-[10px]">LAPORAN_SISTEM_KRITIS</span>
-            </div>
-            <span className="text-outline text-[10px]">LOG_EROR: 504</span>
-          </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {milestones.map((item, index) => (
+            <motion.div
+              key={item.year}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="p-5 rounded-lg border border-outline-variant/20 bg-surface-container-lowest/50 hover:border-primary-fixed-dim/40 transition-colors flex flex-col justify-between"
+            >
+              <div className="space-y-3">
+                <span className="font-label-mono text-xs font-semibold text-primary-fixed-dim tracking-wide">
+                  {item.year}
+                </span>
+                <h3 className="text-body-md font-bold text-on-surface">
+                  {item.title}
+                </h3>
+                <p className="text-body-sm text-on-surface-variant/80 font-light leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
 
-          <div className="space-y-3 pt-2">
-            {mockErrors.map((err, i) => (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-                key={err.code}
-                className="p-3 bg-red-950/20 border border-error/10 rounded flex flex-col gap-1 animate-[pulse_3s_infinite]"
-              >
-                <div className="flex justify-between items-center text-[10px]">
-                  <span className={`${err.type === 'COMPILER_WARN' ? 'text-yellow-500' : 'text-error'} font-bold`}>
-                    [{err.type}]
+              <div className="pt-4 mt-4 border-t border-outline-variant/10 flex flex-wrap gap-1.5">
+                {item.focus.map((f) => (
+                  <span
+                    key={f}
+                    className="font-label-mono text-[9px] text-outline px-2 py-0.5 rounded bg-surface-container/40"
+                  >
+                    {f}
                   </span>
-                  <span className="text-outline">{err.code}</span>
-                </div>
-                <div className="text-on-surface-variant text-[11px] mt-1 font-mono break-all">{err.msg}</div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-[10px] text-outline pt-2 flex justify-between">
-            <span>MENCOBA_MENGHUBUNGKAN_KEMBALI...</span>
-            <span className="animate-pulse">_</span>
-          </div>
-        </motion.div>
-
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -6,6 +6,19 @@ import Modal from './ui/Modal';
 import Card from './ui/Card';
 import { ArrowUpRight } from 'lucide-react';
 
+function sanitizeUrl(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol === 'https:' || parsed.protocol === 'http:') {
+      return url;
+    }
+    return undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 interface Project {
   id: string;
   title: string;
@@ -31,23 +44,23 @@ export const Episode4: React.FC<Episode4Props> = ({ id }) => {
     {
       id: 'project-1',
       title: 'Worlcup',
-      tag: 'EKSPLORASI_DATA_OLAHRAGA',
-      desc: 'Karya dedikasi untuk merangkum riuh rendah antusiasme sepak bola dunia. Melalui platform ini, saya belajar mengalirkan semangat jutaan manusia di berbagai penjuru bumi ke dalam satu genggaman layar.',
-      problem: 'Menampilkan data jadwal, klasemen, dan statistik turnamen akbar secara real-time dengan latensi rendah tanpa membuat pengguna kebingungan.',
-      solution: 'Mengintegrasikan API data olahraga dengan caching agresif di sisi server untuk menyajikan pembaruan skor instan.',
-      result: 'Mampu menyajikan statistik pertandingan dalam hitungan milidetik secara lancar tanpa hambatan.',
-      stack: ['React', 'Next.js', 'Tailwind', 'REST API'],
+      tag: 'Data Analytics',
+      desc: 'Platform pemantauan turnamen sepak bola dengan data jadwal, klasemen, dan statistik langsung.',
+      problem: 'Menampilkan data jadwal dan statistik turnamen secara real-time dengan latensi rendah.',
+      solution: 'Integrasi API data olahraga dengan mekanisme caching server-side yang efisien.',
+      result: 'Penyajian statistik pertandingan instan dan responsif.',
+      stack: ['React', 'Next.js', 'Tailwind CSS', 'REST API'],
       image: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=1000',
       githubUrl: 'https://github.com/yusjul/Worlcup'
     },
     {
       id: 'project-2',
       title: 'laundry-app',
-      tag: 'MANAJEMEN_USAHA_LOKAL',
-      desc: 'Proyek yang mengajarkan saya bahwa teknologi terbaik adalah teknologi yang menyentuh urusan nyata manusia sehari-hari. Dibuat khusus untuk menyederhanakan dan merapikan manajemen operasional laundry.',
-      problem: 'Usaha laundry kecil sering kali kesulitan melacak status cucian pelanggan secara akurat, menyebabkan risiko kehilangan pakaian atau keterlambatan pelayanan.',
-      solution: 'Merancang database pelacak pesanan sederhana namun komprehensif, terhubung dengan notifikasi otomatis ke pelanggan.',
-      result: 'Meminimalkan kesalahan pencatatan status cucian hingga 99% dan meningkatkan kepercayaan pelanggan usaha lokal.',
+      tag: 'Web Application',
+      desc: 'Aplikasi pengelolaan alur kerja operasional dan pelacakan status pesanan laundry berbasis web.',
+      problem: 'Pencatatan manual pesanan laundry rawan kesalahan status pengerjaan dan penagihan.',
+      solution: 'Sistem pencatatan pesanan terpusat dengan dasbor status cucian yang mudah dipantau.',
+      result: 'Mengurangi kekeliruan pencatatan dan mempermudah operasional harian.',
       stack: ['JavaScript', 'HTML5', 'CSS3', 'Node.js'],
       image: '/thumbnails/laundry-app.png',
       githubUrl: 'https://github.com/yusjul/laundry-app',
@@ -56,12 +69,12 @@ export const Episode4: React.FC<Episode4Props> = ({ id }) => {
     {
       id: 'project-3',
       title: 'ToolSuf',
-      tag: 'UTILITAS_PENGEMBANG',
-      desc: 'Kumpulan perkakas kecil yang lahir dari kebutuhan harian saya. Bukti bahwa efisiensi sejati sering kali dimulai dari alat-alat sederhana yang kita buat secara mandiri untuk mempermudah hidup kita sendiri.',
-      problem: 'Tugas pemrosesan string dan data berulang-ulang membuang banyak waktu produktif setiap hari.',
-      solution: 'Membangun pustaka fungsi utilitas serbaguna yang dikemas secara rapi agar mudah dipanggil kapan saja.',
-      result: 'Mempercepat alur kerja coding harian saya hingga 40% dan merapikan pola penulisan kode berulang.',
-      stack: ['TypeScript', 'Node.js', 'ES6'],
+      tag: 'Developer Tools',
+      desc: 'Kumpulan utilitas online praktis untuk manipulasi dokumen, konversi format, dan produktivitas harian.',
+      problem: 'Alat bantu online yang ada sering kali berat, dipenuhi iklan berlebih, atau kurang praktis.',
+      solution: 'Membangun modul tools mandiri yang ringan, modular, dan berjalan langsung di sisi klien.',
+      result: 'Perangkat utilitas cepat dengan waktu muat minimal tanpa ketergantungan server berat.',
+      stack: ['TypeScript', 'JavaScript', 'Tailwind CSS'],
       image: '/thumbnails/toolsuf.png',
       githubUrl: 'https://github.com/yusjul/ToolSuf',
       demoUrl: 'https://tool-suf.vercel.app'
@@ -69,12 +82,12 @@ export const Episode4: React.FC<Episode4Props> = ({ id }) => {
     {
       id: 'project-4',
       title: 'LabsYusJuL-futurestack',
-      tag: 'EKSPERIMEN_ARSITEKTUR',
-      desc: 'Kamar eksperimen tempat saya menguji batas-batas arsitektur web modern. Di sini, saya menantang diri untuk menguji kombinasi stack terbaru, belajar dari kegagalan untuk merumuskan masa depan pengembangan web.',
-      problem: 'Mengintegrasikan berbagai framework baru dengan optimasi rendering yang maksimal sering kali menemui hambatan kecocokan library.',
-      solution: 'Merancang kerangka boilerplate modular dengan konfigurasi bundling yang dioptimalkan untuk meminimalkan beban load awal halaman.',
-      result: 'Berhasil meraih skor performa Lighthouse 100/100 pada struktur pengujian awal stack masa depan.',
-      stack: ['Next.js', 'TypeScript', 'Tailwind v4', 'GraphQL'],
+      tag: 'Architecture Experiment',
+      desc: 'Eksperimen arsitektur web modern menguji integrasi Next.js, TypeScript, dan optimasi performa tinggi.',
+      problem: 'Memastikan performa optimal dan modularitas kode pada aplikasi berbasis Next.js App Router.',
+      solution: 'Perancangan arsitektur modular dengan struktur layout terisolasi dan bundling optimal.',
+      result: 'Skor Lighthouse tinggi dan waktu interaksi awal yang sangat cepat.',
+      stack: ['Next.js', 'TypeScript', 'Tailwind CSS'],
       image: '/thumbnails/futurestack.png',
       githubUrl: 'https://github.com/yusjul/LabsYusJuL-futurestack',
       demoUrl: 'https://labs-yus-ju-l-futurestack.vercel.app'
@@ -82,11 +95,11 @@ export const Episode4: React.FC<Episode4Props> = ({ id }) => {
     {
       id: 'project-5',
       title: 'suaraku-offline',
-      tag: 'PRIVASI_PEMROSESAN_SUARA',
-      desc: 'Karya ini lahir dari kepedulian saya terhadap privasi data suara kita. Memungkinkan perekaman dan analisis gelombang suara secara luring (offline) tanpa membutuhkan koneksi internet, menjaga agar suara kita tetap menjadi milik kita seutuhnya.',
-      problem: 'Sebagian besar alat pemroses suara modern bergantung pada server cloud, yang memicu keraguan terkait keamanan data pribadi pengguna.',
-      solution: 'Mengembangkan parser audio berbasis web local API yang mengevaluasi gelombang suara secara langsung di browser pengguna.',
-      result: 'Menjamin kerahasiaan data suara 100% luring dengan waktu proses instan tanpa latensi jaringan.',
+      tag: 'Audio Processing',
+      desc: 'Perekam dan visualisator gelombang suara berbasis web yang berjalan 100% luring untuk privasi pengguna.',
+      problem: 'Banyak web audio tools mengirim rekaman suara ke cloud tanpa transparansi.',
+      solution: 'Memanfaatkan Web Audio API peramban untuk pemrosesan audio lokal tanpa koneksi luar.',
+      result: 'Privasi data suara terlindungi penuh tanpa latensi pengiriman jaringan.',
       stack: ['JavaScript', 'Web Audio API', 'HTML5', 'CSS3'],
       image: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&q=80&w=1000',
       githubUrl: 'https://github.com/yusjul/suaraku-offline'
@@ -94,23 +107,23 @@ export const Episode4: React.FC<Episode4Props> = ({ id }) => {
     {
       id: 'project-6',
       title: 'portopolio',
-      tag: 'KRONIK_DIGITAL_INTERAKTIF',
-      desc: 'Ruang refleksi digital ini. Sebuah catatan interaktif yang tidak sekadar menceritakan keahlian saya, tetapi juga merekam perjalanan jiwa saya di dunia baris-baris logika.',
-      problem: 'Membuat situs portofolio yang tidak biasa—yang mampu menyentuh sisi emosional pembacanya sekaligus menampilkan performa visual shader WebGL yang mutakhir.',
-      solution: 'Memadukan WebGL background shader, Framer Motion, dan struktur layout Next.js dengan narasi sastra bahasa Indonesia.',
-      result: 'Menciptakan pengalaman bercerita yang sinematik dengan visual halus dan performa rendering 60 FPS.',
-      stack: ['Next.js', 'Framer Motion', 'WebGL', 'Tailwind CSS'],
+      tag: 'Creative Web',
+      desc: 'Website portofolio interaktif dengan WebGL background shader dan micro-interaction berbasis cerita.',
+      problem: 'Menyajikan identitas diri yang kuat secara visual tanpa mengorbankan performa halaman.',
+      solution: 'Kombinasi shader fragment GLSL, Framer Motion, dan sistem desain gelap berkarakter.',
+      result: 'Tampilan visual dinamis dengan frame rate 60 FPS dan navigasi yang terstruktur.',
+      stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'WebGL'],
       image: '/thumbnails/portopolio.png',
       githubUrl: 'https://github.com/yusjul/portopolio'
     },
     {
       id: 'project-7',
       title: 'Manis-diawal',
-      tag: 'FILOSOFI_INTERAKTIF',
-      desc: 'Sebuah karya penuh filosofi tentang janji manis di awal. Melalui eksplorasi ini, saya menuangkan sudut pandang sarkasme dan humor yang jujur ke dalam interaksi digital, mengingatkan kita bahwa janji awal sering kali berbeda di akhir.',
-      problem: 'Menerjemahkan ide abstrak tentang dinamika hubungan dan harapan manusia menjadi interaksi digital yang menarik secara psikologis.',
-      solution: 'Membangun alur cerita bercabang (interactive branching narrative) dengan antarmuka gelap-neon yang merespons pilihan pengguna.',
-      result: 'Memicu kontemplasi mendalam sekaligus menghibur pengguna melalui perjalanan cerita yang satir namun jujur.',
+      tag: 'Interactive Web',
+      desc: 'Eksplorasi web interaktif berbasis narasi cabang dengan antarmuka tematik gelap kontras.',
+      problem: 'Membangun interaksi web naratif yang responsif terhadap input pilihan pengguna.',
+      solution: 'Implementasi finite state machine sederhana untuk mengelola alur percabangan cerita.',
+      result: 'Pengalaman interaktif yang dinamis dengan transisi visual yang halus.',
       stack: ['JavaScript', 'Framer Motion', 'HTML5', 'CSS3'],
       image: 'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&q=80&w=1000',
       githubUrl: 'https://github.com/yusjul/Manis-diawal'
@@ -118,24 +131,24 @@ export const Episode4: React.FC<Episode4Props> = ({ id }) => {
     {
       id: 'project-8',
       title: 'AutoSort-Downloads',
-      tag: 'MANAJEMEN_SISTEM_OTOMATIS',
-      desc: 'Sebuah program yang bekerja dalam keheningan latar belakang untuk merapikan kekacauan folder unduhan saya secara otomatis. Bukti bahwa ketertiban eksternal mampu membawa ketenangan dalam pikiran kita saat bekerja.',
-      problem: 'Folder Downloads yang menumpuk tak beraturan memperlambat pencarian file dan membuat desktop terasa penuh tekanan visual.',
-      solution: 'Membuat skrip pengawas direktori yang mengelompokkan file berdasarkan ekstensi dan waktu unduh secara real-time.',
-      result: 'Folder unduhan senantiasa rapi setiap waktu, menghemat waktu pencarian dokumen hingga ratusan menit setiap bulannya.',
-      stack: ['Python', 'Automation', 'OS Scripting'],
+      tag: 'System Automation',
+      desc: 'Skrip otomatisasi berbasis sistem untuk mengorganisir berkas unduhan secara otomatis berdasarkan tipe.',
+      problem: 'Folder unduhan yang berantakan memperlambat pencarian dokumen dan memakan kapasitas disk.',
+      solution: 'Watcher direktori otomatis yang memindahkan berkas ke folder kategori yang sesuai.',
+      result: 'Folder unduhan tetap rapi otomatis tanpa intervensi manual berkala.',
+      stack: ['Python', 'OS Scripting', 'Automation'],
       image: 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&q=80&w=1000',
       githubUrl: 'https://github.com/yusjul/AutoSort-Downloads'
     },
     {
       id: 'project-9',
       title: 'Domino-AI-Anlyzer',
-      tag: 'PROBABILITAS_KECERDASAN_BUATAN',
-      desc: 'Eksplorasi kecerdasan buatan untuk membaca peluang dalam permainan domino. Jembatan antara teori probabilitas matematika dengan keputusan taktis dalam hitungan detik.',
-      problem: 'Menganalisis pergerakan kartu domino lawan secara dinamis untuk memprediksi probabilitas kemenangan di setiap putaran permainan.',
-      solution: 'Mengembangkan algoritma analisis probabilitas statistik berbasis pergerakan kartu keluar yang dipadukan dengan pemodelan AI sederhana.',
-      result: 'Mampu memberikan rekomendasi langkah taktis secara cepat guna meningkatkan persentase kemenangan taktis.',
-      stack: ['Python', 'AI Model', 'Statistical Analytics'],
+      tag: 'Data & Probability',
+      desc: 'Eksperimen komputasi probabilitas dan kalkulasi langkah taktis dalam simulasi permainan domino.',
+      problem: 'Memprediksi sebaran kartu sisa lawan secara statistik di setiap giliran putaran.',
+      solution: 'Algoritma probabilitas probabilistik yang menghitung peluang kombinasi langkah optimal.',
+      result: 'Rekomendasi keputusan langkah berdasarkan pergerakan kartu yang telah keluar.',
+      stack: ['Python', 'Statistical Analysis', 'Algorithm'],
       image: 'https://images.unsplash.com/photo-1611195974226-a6a9be9dd763?auto=format&fit=crop&q=80&w=1000',
       githubUrl: 'https://github.com/yusjul/Domino-AI-Anlyzer'
     }
@@ -143,50 +156,68 @@ export const Episode4: React.FC<Episode4Props> = ({ id }) => {
 
   return (
     <section id={id} className="snap-section flex items-center px-safe-margin bg-transparent overflow-y-auto py-20 md:py-24">
-      <div className="w-full max-w-7xl mx-auto space-y-12">
-        <div className="flex justify-between items-end">
-          <div className="space-y-4">
-            <div className="glass-panel px-3 py-1.5 w-fit text-[10px] tracking-[0.2em] font-label-mono font-bold uppercase text-primary-fixed-dim rounded-full border border-primary-fixed-dim/15 bg-white/[0.02] shadow-[0_0_15px_rgba(0,242,255,0.05)] mb-3">
-              Episode 04 // Karya
+      <div className="w-full max-w-7xl mx-auto space-y-10">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="space-y-4 max-w-xl"
+          >
+            <div className="font-label-mono text-[10px] tracking-[0.25em] text-outline uppercase">
+              04 — Karya
             </div>
-            <h2 className="text-headline-lg bg-gradient-to-r from-white to-on-surface-variant bg-clip-text text-transparent font-extrabold tracking-tight">Jejak Penciptaan</h2>
-          </div>
-          <span className="font-label-mono text-xs text-outline hidden md:block select-none">
-            TOTAL_KARYA: {String(projects.length).padStart(2, '0')}
+            <h2 className="text-headline-lg text-on-surface font-extrabold tracking-tight">
+              Proyek terpilih
+            </h2>
+            <p className="text-body-lg text-on-surface-variant font-light leading-relaxed">
+              Aplikasi, utilitas, dan eksperimen teknis yang dibangun untuk memecahkan masalah nyata.
+            </p>
+          </motion.div>
+          <span className="font-label-mono text-xs text-outline tracking-wider self-start sm:self-auto">
+            {String(projects.length).padStart(2, '0')} Proyek
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project, i) => (
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
               key={project.id}
             >
               <Card 
                 onClick={() => setSelectedProject(project)}
-                className="p-0 border border-outline-variant/10 aspect-video md:aspect-[4/3] group relative"
+                className="p-0 border border-outline-variant/20 rounded-lg overflow-hidden aspect-[16/10] group relative cursor-pointer bg-surface-container-lowest"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-50"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-40 group-hover:opacity-60"
                   src={project.image}
                   alt={project.title}
+                  onError={(e) => {
+                    // Fallback to subtle dark gradient if image fails
+                    e.currentTarget.style.display = 'none';
+                  }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-dim via-surface-dim/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-dim via-surface-dim/60 to-transparent" />
                 
-                <div className="absolute bottom-0 left-0 p-4 md:p-6 w-full flex justify-between items-end z-10">
-                  <div className="space-y-0.5 md:space-y-1">
-                    <span className="font-label-mono text-[9px] text-primary-fixed-dim tracking-wider block">
+                <div className="absolute bottom-0 left-0 p-5 w-full flex justify-between items-end z-10">
+                  <div className="space-y-1.5 pr-3">
+                    <span className="font-label-mono text-[10px] text-primary-fixed-dim tracking-wider block uppercase">
                       {project.tag}
                     </span>
-                    <h3 className="text-sm md:text-headline-md font-bold tracking-wide text-on-surface line-clamp-1">
+                    <h3 className="text-base md:text-lg font-bold text-on-surface line-clamp-1">
                       {project.title}
                     </h3>
+                    <p className="text-body-sm text-on-surface-variant/80 font-light line-clamp-1 hidden sm:block">
+                      {project.desc}
+                    </p>
                   </div>
-                  <div className="hidden md:flex w-8 h-8 rounded border border-primary-fixed-dim/20 bg-surface-container-lowest/80 items-center justify-center text-primary-fixed-dim group-hover:bg-primary-container group-hover:text-on-primary transition-all duration-300">
+                  <div className="flex-shrink-0 w-8 h-8 rounded border border-outline-variant/30 bg-surface-container-lowest/80 flex items-center justify-center text-outline group-hover:text-primary-fixed-dim group-hover:border-primary-fixed-dim/40 transition-colors">
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </div>
@@ -206,60 +237,62 @@ export const Episode4: React.FC<Episode4Props> = ({ id }) => {
       >
         {selectedProject && (
           <div className="space-y-6">
-            <p className="text-body-lg text-on-surface-variant font-sans italic border-l-2 border-primary-fixed-dim pl-4 py-1">
+            <p className="text-body-md text-on-surface-variant leading-relaxed">
               {selectedProject.desc}
             </p>
-            <div className="grid md:grid-cols-3 gap-6 pt-4">
+            <div className="grid md:grid-cols-3 gap-5 pt-2">
               <div className="md:col-span-2 space-y-4">
-                <div>
-                  <h4 className="font-label-mono text-[10px] text-primary-fixed-dim tracking-widest uppercase mb-1">
-                    TANTANGAN
+                <div className="space-y-1.5">
+                  <h4 className="font-label-mono text-[10px] text-outline tracking-wider uppercase">
+                    Masalah
                   </h4>
-                  <p className="text-body-md text-on-surface-variant font-sans">
+                  <p className="text-body-sm text-on-surface-variant/90 leading-relaxed">
                     {selectedProject.problem}
                   </p>
                 </div>
-                <div>
-                  <h4 className="font-label-mono text-[10px] text-primary-fixed-dim tracking-widest uppercase mb-1">
-                    SOLUSI
+                <div className="space-y-1.5">
+                  <h4 className="font-label-mono text-[10px] text-outline tracking-wider uppercase">
+                    Solusi
                   </h4>
-                  <p className="text-body-md text-on-surface-variant font-sans">
+                  <p className="text-body-sm text-on-surface-variant/90 leading-relaxed">
                     {selectedProject.solution}
                   </p>
                 </div>
               </div>
               
-              <div className="bg-surface-container-low/40 border border-outline-variant/20 p-6 rounded space-y-3 flex flex-col justify-center">
-                <h4 className="font-label-mono text-[10px] text-outline tracking-widest uppercase">
-                  HASIL_YANG_TERCAPAI
+              <div className="bg-surface-container-low/50 border border-outline-variant/20 p-4 rounded-lg space-y-2 flex flex-col justify-center">
+                <h4 className="font-label-mono text-[10px] text-outline tracking-wider uppercase">
+                  Hasil
                 </h4>
-                <p className="font-label-mono text-[13px] text-primary-fixed-dim font-bold leading-relaxed">
+                <p className="font-label-mono text-xs text-primary-fixed-dim font-medium leading-relaxed">
                   {selectedProject.result}
                 </p>
               </div>
             </div>
 
-            <div className="pt-6 border-t border-outline-variant/10 flex flex-wrap gap-4 justify-start">
-              {selectedProject.demoUrl && (
+            <div className="pt-4 border-t border-outline-variant/15 flex flex-wrap gap-3">
+              {sanitizeUrl(selectedProject.demoUrl) && (
                 <a
-                  href={selectedProject.demoUrl}
+                  href={sanitizeUrl(selectedProject.demoUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-2.5 font-label-mono text-xs uppercase tracking-wider transition-all duration-300 rounded-full bg-gradient-to-r from-[#00b4d8] to-[#00f2ff] text-black font-extrabold hover:shadow-[0_0_30px_rgba(0,242,255,0.4)] border border-[#00f2ff]/30 flex items-center gap-2 cursor-pointer"
+                  className="px-5 py-2 font-label-mono text-xs font-semibold rounded-md bg-primary-fixed-dim text-black hover:bg-primary transition-colors flex items-center gap-2 cursor-pointer"
                 >
-                  Buka Demo Live
-                  <ArrowUpRight className="w-4 h-4" />
+                  Live Demo
+                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               )}
-              <a
-                href={selectedProject.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2.5 font-label-mono text-xs uppercase tracking-wider transition-all duration-300 rounded-full border border-primary-fixed-dim/30 text-primary-fixed-dim bg-white/5 hover:bg-primary-fixed-dim/10 hover:border-primary-fixed-dim hover:shadow-[0_0_20px_rgba(0,242,255,0.15)] flex items-center gap-2 cursor-pointer"
-              >
-                Kunjungi Repositori
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
+              {sanitizeUrl(selectedProject.githubUrl) && (
+                <a
+                  href={sanitizeUrl(selectedProject.githubUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2 font-label-mono text-xs font-semibold rounded-md border border-outline-variant/40 text-on-surface hover:border-primary-fixed-dim/50 hover:text-primary-fixed-dim transition-colors flex items-center gap-2 cursor-pointer"
+                >
+                  GitHub Repository
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              )}
             </div>
           </div>
         )}

@@ -9,50 +9,47 @@ interface Episode6Props {
 
 export const Episode6: React.FC<Episode6Props> = ({ id }) => {
   return (
-    <section id={id} className="snap-section flex flex-col justify-center items-center px-safe-margin bg-transparent relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute w-[500px] h-[500px] bg-primary-fixed-dim/5 rounded-full filter blur-[120px] pointer-events-none z-0" />
-
-      <div className="text-center space-y-6 z-10 select-none">
+    <section id={id} className="snap-section flex flex-col justify-center items-center px-safe-margin bg-transparent relative overflow-hidden py-16">
+      <div className="text-center space-y-8 z-10 max-w-2xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="glass-panel px-3 py-1.5 w-fit mx-auto text-[10px] tracking-[0.2em] font-label-mono font-bold uppercase text-primary-fixed-dim rounded-full border border-primary-fixed-dim/15 bg-white/[0.02] shadow-[0_0_15px_rgba(0,242,255,0.05)]"
+          transition={{ duration: 0.5 }}
+          className="font-label-mono text-[10px] tracking-[0.25em] text-outline uppercase"
         >
-          Episode 06 // Identitas
+          06 — Identitas
         </motion.div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <motion.h2
-            initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, ease: 'easeOut' }}
-            className="text-headline-lg md:text-display-lg font-black tracking-tighter bg-gradient-to-r from-white via-on-surface to-on-surface-variant/80 bg-clip-text text-transparent uppercase"
+            transition={{ duration: 0.7 }}
+            className="text-headline-lg md:text-display-lg font-black tracking-tight text-on-surface uppercase"
           >
-            MUHAMMAD YUSUF JULIAN
+            Muhammad Yusuf Julian
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 0.8 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="font-label-mono text-xs md:text-sm text-primary-fixed-dim tracking-[0.3em] uppercase"
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="font-label-mono text-xs md:text-sm text-primary-fixed-dim tracking-[0.25em] uppercase"
           >
-            YUSJUL // SISTEM INFORMASI
+            Yusjul · Mahasiswa Sistem Informasi
           </motion.p>
         </div>
 
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="font-label-mono text-[10px] text-outline tracking-wider max-w-md mx-auto pt-8 border-t border-outline-variant/10"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-body-md text-on-surface-variant font-light leading-relaxed max-w-lg mx-auto"
         >
-          PEKA_PERANGKAT_KERAS // BERPIKIR_TINGKAT_SISTEM
+          Tertarik pada eksplorasi antarmuka digital yang intuitif, arsitektur data yang efisien, dan penerapan teknologi yang berdampak langsung pada produktivitas.
         </motion.p>
       </div>
     </section>

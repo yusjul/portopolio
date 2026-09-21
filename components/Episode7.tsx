@@ -7,104 +7,100 @@ interface Episode7Props {
   id?: string;
 }
 
+interface FocusArea {
+  title: string;
+  status: string;
+  desc: string;
+  tech: string[];
+}
+
 export const Episode7: React.FC<Episode7Props> = ({ id }) => {
-  const focusAreas = [
+  const focusAreas: FocusArea[] = [
     {
-      sector: 'MENGHIDUPKAN PIKIRAN MESIN',
-      status: 'RISET_AKTIF',
-      desc: 'Mencoba menanamkan kepekaan pada kecerdasan buatan, menjembatani logika komputasi dengan intuisi manusia agar teknologi terasa lebih manusiawi.',
-      tech: ['Transformers', 'Pinecone', 'Ollama', 'PyTorch'],
-      progress: 75
+      title: 'Frontend Engineering',
+      status: 'Fokus Utama',
+      desc: 'Membangun antarmuka modern yang responsif, cepat diakses, dan nyaman digunakan dengan arsitektur komponen terstruktur.',
+      tech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS']
     },
     {
-      sector: 'RUANG INTERAKSI MANUSIA',
-      status: 'PRODUKSI_STABIL',
-      desc: 'Merancang ruang-ruang digital interaktif yang terasa hidup, responsif, dan menyambut setiap sentuhan pengguna dengan kelembutan gerakan.',
-      tech: ['Next.js App Router', 'WebSockets', 'Tailwind v4', 'Framer Motion'],
-      progress: 95
+      title: 'Backend & Integrasi Data',
+      status: 'Pengembangan Aktif',
+      desc: 'Merancang alur data, integrasi API, dan pengelolaan database relasional untuk kebutuhan fungsional aplikasi.',
+      tech: ['Node.js', 'REST API', 'MySQL', 'PostgreSQL']
     },
     {
-      sector: 'JANTUNG YANG BERDETAK KENCANG',
-      status: 'PRODUKSI_STABIL',
-      desc: 'Membangun fondasi kuat di balik layar yang mengalirkan data tanpa kenal lelah, menjaga agar kehidupan digital tidak pernah padam.',
-      tech: ['Go', 'Node.js', 'PostgreSQL', 'Redis'],
-      progress: 90
+      title: 'Analisis Sistem Informasi',
+      status: 'Akademik & Praktik',
+      desc: 'Menganalisis kebutuhan pengguna, memetakan proses bisnis, dan merancang solusi digital yang efisien.',
+      tech: ['Business Process', 'System Design', 'Figma', 'UML']
     },
     {
-      sector: 'SEMESTA DI ATAS AWAN',
-      status: 'PENGEMBANGAN_AKTIF',
-      desc: 'Merancang ruang penyimpanan tak terbatas di awan yang aman dan tangguh, tempat mimpi-mimpi digital kita dipelihara dan dilindungi.',
-      tech: ['Kubernetes', 'Docker', 'Terraform', 'AWS'],
-      progress: 80
+      title: 'Otomasi & Eksplorasi Data',
+      status: 'Eksplorasi',
+      desc: 'Mengotomatisasi tugas rutin dengan skrip mandiri dan mengeksplorasi pemanfaatan model bahasa untuk produktivitas.',
+      tech: ['Python', 'Automation Scripting', 'Data Processing']
     }
   ];
 
   return (
-    <section id={id} className="snap-section flex items-center justify-center bg-transparent px-safe-margin">
-      <div className="w-full max-w-7xl mx-auto space-y-12">
-        <div className="space-y-4">
-          <div className="glass-panel px-3 py-1.5 w-fit text-[10px] tracking-[0.2em] font-label-mono font-bold uppercase text-primary-fixed-dim rounded-full border border-primary-fixed-dim/15 bg-white/[0.02] shadow-[0_0_15px_rgba(0,242,255,0.05)]">
-            Episode 07 // Fokus
+    <section id={id} className="snap-section flex items-center justify-center bg-transparent px-safe-margin py-16">
+      <div className="w-full max-w-6xl mx-auto space-y-10">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="space-y-4 max-w-xl"
+        >
+          <div className="font-label-mono text-[10px] tracking-[0.25em] text-outline uppercase">
+            07 — Fokus
           </div>
-          <h2 className="text-headline-lg bg-gradient-to-r from-white to-on-surface-variant bg-clip-text text-transparent font-extrabold tracking-tight">Ke mana Jiwa Ini Melangkah</h2>
-        </div>
+          <h2 className="text-headline-lg text-on-surface font-extrabold tracking-tight">
+            Bidang minat dan pengembangan
+          </h2>
+          <p className="text-body-lg text-on-surface-variant font-light leading-relaxed">
+            Area teknis yang aktif saya pelajari dan terapkan dalam proyek nyata.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {focusAreas.map((area, i) => (
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              key={area.sector}
-              className="glass-panel p-4 md:p-6 border border-outline-variant/15 flex flex-col justify-between min-h-[290px] md:min-h-[320px] rounded-lg group hover:border-primary-fixed-dim/30 hover:shadow-[0_0_15px_rgba(0,242,255,0.05)] transition-all duration-500"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              key={area.title}
+              className="p-6 rounded-lg border border-outline-variant/20 bg-surface-container-lowest/50 hover:border-primary-fixed-dim/40 transition-colors flex flex-col justify-between space-y-5"
             >
-              <div className="space-y-4">
-                <div className="flex justify-between items-start">
-                  <span className="font-label-mono text-[9px] text-primary-fixed-dim bg-primary-fixed-dim/10 px-2.5 py-1 rounded tracking-widest font-bold">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="font-label-mono text-[10px] text-primary-fixed-dim tracking-wider uppercase font-semibold">
                     {area.status}
                   </span>
-                  <span className="font-label-mono text-xs text-outline font-bold">
+                  <span className="font-label-mono text-xs text-outline">
                     0{i + 1}
                   </span>
                 </div>
                 
-                <h3 className="font-label-mono text-sm font-bold text-on-surface tracking-wider">
-                  {area.sector}
+                <h3 className="text-body-md font-bold text-on-surface">
+                  {area.title}
                 </h3>
                 
-                <p className="text-body-md text-on-surface-variant font-sans text-xs leading-relaxed">
+                <p className="text-body-sm text-on-surface-variant/80 font-light leading-relaxed">
                   {area.desc}
                 </p>
               </div>
 
-              <div className="space-y-4 pt-4 border-t border-outline-variant/10">
-                <div className="space-y-1">
-                  <div className="flex justify-between text-[9px] font-label-mono text-outline">
-                    <span>FOKUS_SEKTOR</span>
-                    <span>{area.progress}%</span>
-                  </div>
-                  <div className="h-1 bg-surface-container-high rounded-full overflow-hidden">
-                    <motion.div
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${area.progress}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1, delay: 0.5 + i * 0.1 }}
-                      className="h-full bg-primary-container"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-1">
-                  {area.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[9px] font-label-mono bg-surface-container-low text-outline px-2 py-0.5 border border-outline-variant/20 rounded"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+              <div className="pt-4 border-t border-outline-variant/10 flex flex-wrap gap-1.5">
+                {area.tech.map((t) => (
+                  <span
+                    key={t}
+                    className="text-[10px] font-label-mono bg-surface-container/40 text-outline px-2.5 py-0.5 rounded"
+                  >
+                    {t}
+                  </span>
+                ))}
               </div>
             </motion.div>
           ))}
